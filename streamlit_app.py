@@ -30,6 +30,12 @@ st.area_chart(chart_data)
 
 # st.area_chart(source, x="date", y="count", color="series", stack="center")
 
+st.write(f"""Example of Code Block""")
+
+code = '''def hello():
+    print("Hello, Streamlit!")'''
+st.code(code, language="python")
+
 # Map
 
 st.write(f"""Example of 3D Map""")
