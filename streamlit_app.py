@@ -7,7 +7,7 @@ from vega_datasets import data
 # from snowflake.snowpark.context import get_active_session
 
 # Write directly to the app
-st.title("Example Streamlit App :balloon:")
+st.title("Snowbyte Streamlit App Demo :balloon:")
 st.write(
     """Normal Text
     **Bold Text**
