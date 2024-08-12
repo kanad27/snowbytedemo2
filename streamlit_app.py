@@ -15,6 +15,8 @@ st.write(
     """
 )
 
+st.balloons()
+
 st.write(f"""Streamlit Version {st.__version__}""")
 
 # Get the current credentials
