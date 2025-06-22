@@ -1,44 +1,110 @@
 # Import python packages
 import streamlit as st
-from snowflake.snowpark.context import get_active_session
+import pandas as pd
+import numpy as np
+# import pydeck as pdk
+# from vega_datasets import data
+# from snowflake.snowpark.context import get_active_session
 
 # Write directly to the app
-st.title(f"Example Streamlit App :balloon: {st.__version__}")
+st.title("Snowbyte Streamlit App Demo :balloon:")
 st.write(
-  """Replace this example with your own code!
-  **And if you're new to Streamlit,** check
-  out our easy-to-follow guides at
-  [docs.streamlit.io](https://docs.streamlit.io).
-  """
+    """Normal Text
+    **Bold Text**
+    :green[ Colored Text ]
+    """
 )
+
+st.balloons()
+
+st.write(f"""Streamlit Version {st.__version__}""")
 
 # Get the current credentials
-session = get_active_session()
+#session = get_active_session()
 
-# Use an interactive slider to get user input
-hifives_val = st.slider(
-  "Number of high-fives in Q3",
-  min_value=0,
-  max_value=90,
-  value=60,
-  help="Use this to enter the number of high-fives you gave in Q3",
+# Area Chart
+chart_data = pd.DataFrame(np.random.randn(20, 3), columns=["a", "b", "c"])
+
+st.area_chart(chart_data)
+
+#Area Chart
+# source = data.unemployment_across_industries()
+
+# st.area_chart(source, x="date", y="count", color="series", stack="center")
+
+st.write(f"""Example of Code Block""")
+
+code = '''def hello():
+    print("Hello, Streamlit!")'''
+st.code(code, language="python")
+
+# Map
+
+st.write(f"""Example of 3D Map""")
+
+chart_data = pd.DataFrame(
+    np.random.randn(1000, 2) / [50, 50] + [37.76, -122.4],
+    columns=["lat", "long"],
 )
 
-#  Create an example dataframe
-#  Note: this is just some dummy data, but you can easily connect to your Snowflake data
-#  It is also possible to query data using raw SQL using session.sql() e.g. session.sql("select * from table")
-created_dataframe = session.create_dataframe(
-  [[50, 25, "Q1"], [20, 35, "Q2"], [hifives_val, 30, "Q3"]],
-  schema=["HIGH_FIVES", "FIST_BUMPS", "QUARTER"],
-)
+# Enable import pydeck as pdk to use pydecj chart
 
-# Execute the query and convert it into a Pandas dataframe
-queried_data = created_dataframe.to_pandas()
+# st.pydeck_chart(
+#     pdk.Deck(
+#         map_style=None,
+#         initial_view_state=pdk.ViewState(
+#             latitude=37.76,
+#             longitude=-122.4,
+#             zoom=11,
+#             pitch=50,
+#         ),
+#         layers=[
+#             pdk.Layer(
+#                 "HexagonLayer",
+#                 data=chart_data,
+#                 get_position="[lon, lat]",
+#                 radius=200,
+#                 elevation_scale=4,
+#                 elevation_range=[0, 1000],
+#                 pickable=True,
+#                 extruded=True,
+#             ),
+#             pdk.Layer(
+#                 "ScatterplotLayer",
+#                 data=chart_data,
+#                 get_position="[lon, lat]",
+#                 get_color="[200, 30, 0, 160]",
+#                 get_radius=200,
+#             ),
+#         ],
+#     )
+# )
 
-# Create a simple bar chart
-# See docs.streamlit.io for more types of charts
-st.subheader("Number of high-fives")
-st.bar_chart(data=queried_data, x="QUARTER", y="HIGH_FIVES")
+# Map
 
-st.subheader("Underlying data")
-st.dataframe(queried_data, use_container_width=True)
+
+# Map2
+
+# Table_Query = """select DATE_PART(WEEK,to_date(START_TIME)) AS WEEK, COUNT(*) AS Count
+#     from snowflake.account_usage.query_history
+#     where WEEK > 0 and WEEK < 18
+#     GROUP BY WEEK
+#     order by WEEK ASC"""
+    
+# sql_data2 = session.sql(Table_Query).to_pandas()
+    
+
+# st.subheader("Queries Executed per Week")
+# st.dataframe(data=sql_data2, use_container_width=True)
+# # df = st.dataframe(sql_data2, use_container_width=True)
+# # df.reset_index(drop=True)
+
+# sql_data2.style.set_properties(subset=['WEEK'], **{'font-weight': 'bold'})
+
+# st.line_chart(data=sql_data2, x="WEEK", y="COUNT")
+
+st.title("Chat Feature")
+
+prompt = st.chat_input("Say something")
+if prompt:
+    st.write(f"User has sent the following prompt: {prompt}")
