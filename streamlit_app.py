@@ -9,7 +9,7 @@ import numpy as np
 # Write directly to the app
 st.title("Snowbyte Streamlit App Demo :balloon:")
 st.write(
-    """Normal Text Para
+    """Normal Text Paragraph
     **Bold Text**
     :green[ Colored Text ]
     """
