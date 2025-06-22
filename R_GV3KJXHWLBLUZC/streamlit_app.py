@@ -105,6 +105,6 @@ chart_data = pd.DataFrame(
 
 st.title("Chat Feature")
 
-prompt = st.chat_input("Say something")
-if prompt:
-    st.write(f"User has sent the following prompt: {prompt}")
+# prompt = st.chat_input("Say something")
+# if prompt:
+#     st.write(f"User has sent the following prompt: {prompt}")
