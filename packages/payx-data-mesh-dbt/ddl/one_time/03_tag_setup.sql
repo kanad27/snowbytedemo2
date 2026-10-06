@@ -1,9 +1,15 @@
--- 03_tag_setup.sql  (v1 - initial)
-CREATE TAG IF NOT EXISTS governance.tags.data_domain;
-CREATE TAG IF NOT EXISTS governance.tags.pii_level;
-CREATE TAG IF NOT EXISTS governance.tags.owner_team;
-GRANT APPLY ON TAG governance.tags.data_domain TO ROLE data_engineer;
-GRANT APPLY ON TAG governance.tags.pii_level   TO ROLE data_engineer;
-GRANT APPLY ON TAG governance.tags.owner_team  TO ROLE data_engineer;
+-- Creates governance tags and the APPLY_COMPLIANCE_TAGS stored procedure.
+-- Co-authored with CoCo
 
-test
+-- This file creates and configures the necessary database tags to govern Snowflake.
+
+-- This file must initially be run by hand. Future work will look into automating this setup.
+
+-- This file assumes that the account setup DDL has already been run, e.g. in a trial Snowflake account.
+-- Account setup DDL can be found here:
+--   https://github.com/paychex/dl_p_dbt_jaffle_shop_example_poc/tree/masking-poc/ddl/one_time
+
+USE ROLE ROLE_SNFLK_DATA_SERVICES;
+
+CREATE DATABASE IF NOT EXISTS PAYX_DATA_MESH;
+CREATE SCHEMA IF NOT EXISTS PAYX_DATA_MESH.GOVERNANCE;
