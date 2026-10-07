@@ -1,20 +1,15 @@
--- Creates APPLY_COMPLIANCE_TAGS stored procedure.
+-- Creates governance tags and the APPLY_COMPLIANCE_TAGS stored procedure.
+-- Co-authored with CoCo
 
--------------------------------------------------------------------------------------------------------
---- TODO - TEMPORARY UNTIL DATA SERVICES CAN CREATE NEW TAGS IN DB_DS_AUTOMATION.PUBLIC SCHEMA
-USE ROLE ROLE_SNFLK_DEPT_ENTARCH_MGR_NP;
+-- This file creates and configures the necessary database tags to govern Snowflake.
 
-CREATE OR ALTER DATABASE DB_ARCH_AUTOMATION COMMENT='Temporary definitions of shared objects proposed by architecture until they can be  moved into DB_DS_AUTOMATION schema';
-CREATE OR ALTER SCHEMA DB_ARCH_AUTOMATION.GOVERNANCE;
+-- This file must initially be run by hand. Future work will look into automating this setup.
 
-CREATE OR ALTER TAG DB_ARCH_AUTOMATION.PUBLIC.PAYX_UNMASK_DATABASE_ROLE;
-GRANT APPLY, READ ON TAG DB_ARCH_AUTOMATION.PUBLIC.PAYX_UNMASK_DATABASE_ROLE TO ROLE PUBLIC;
+-- This file assumes that the account setup DDL has already been run, e.g. in a trial Snowflake account.
+-- Account setup DDL can be found here:
+--   https://github.com/paychex/dl_p_dbt_jaffle_shop_example_poc/tree/masking-poc/ddl/one_time
 
-CREATE OR ALTER TAG DB_ARCH_AUTOMATION.PUBLIC.PAYX_SEMANTIC_TYPE;
--- PROPAGATE = ON_DEPENDENCY_AND_DATA_MOVEMENT;
--- TODO: Operate PROPAGATE property requires APPLY TAG ON ACCOUNT privilege.
-GRANT APPLY, READ ON TAG DB_ARCH_AUTOMATION.PUBLIC.PAYX_SEMANTIC_TYPE TO ROLE PUBLIC;
+USE ROLE ROLE_SNFLK_DATA_SERVICES;
 
--- "PAYX_SENSITIVE-DATA-TYPE" is defined in DB_DS_AUTOMATION, but data services has not granted APPLY privileges on this yet
-CREATE OR ALTER TAG DB_ARCH_AUTOMATION.PUBLIC."PAYX_SENSITIVE-DATA-TYPE";
-GRANT APPLY, READ ON TAG DB_ARCH_AUTOMATION.PUBLIC."PAYX_SENSITIVE-DATA-TYPE" TO ROLE PUBLIC;
+CREATE DATABASE IF NOT EXISTS PAYX_DATA_MESH;
+CREATE SCHEMA IF NOT EXISTS PAYX_DATA_MESH.GOVERNANCE;
