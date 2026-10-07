@@ -1,3 +1,4 @@
+-- marker 1
 -- Creates governance tags and the APPLY_COMPLIANCE_TAGS stored procedure.
 -- Co-authored with CoCo
 
